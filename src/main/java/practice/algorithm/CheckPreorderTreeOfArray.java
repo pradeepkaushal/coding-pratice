@@ -4,6 +4,11 @@ import java.util.Stack;
 
 public class CheckPreorderTreeOfArray {
     public static void main(String[] args) {
+        int[] arr = {40, 30, 35,20, 80, 100};
+        CheckPreorderTreeOfArray checkPreorderTreeOfArray = new CheckPreorderTreeOfArray();
+       // boolean b = checkPreorderTreeOfArray.checkBstFromPreOrderArray(arr, 0, arr.length - 1);
+        boolean flag = checkPreorderTreeOfArray.checkBstFromPreOrderArray(arr);
+        System.out.println(flag);
 
     }
 
@@ -13,32 +18,44 @@ public class CheckPreorderTreeOfArray {
 
     }
 
-    public boolean checkPreorder(int[] arr) {
 
-        Stack<Node> stack = new Stack<>();
-
-        Node node = new Node();
-        node.data = arr[0];
-        stack.push(node);
-        for (int i = 1; i < arr.length; i++) {
-            Node temp = null;
-            while (!stack.isEmpty() && arr[i] > stack.peek().data) {
-                temp = stack.pop();
-            }
-            if (temp != null) {
-                Node n = new Node();
-                n.data = arr[i];
-                temp.right = n;
-                stack.push(n);
-            } else {
-                Node n = new Node();
-                n.data = arr[i];
-                temp = stack.peek();
-                temp.left = n;
-                stack.push(n);
+    public boolean checkBstFromPreOrderArray(int[] arr, int low, int high) {
+        if (low >= high) {
+            return true;
+        }
+        int temp = arr[low];
+        int j = low;
+        for (int i = low + 1; i < high; i++) {
+            if (temp < arr[i]) {
+                j = i;
+                break;
             }
         }
-        return false;
+        for (int i = j; i < high; i++) {
+            if (arr[j] > arr[i]) {
+                return false;
+            }
+        }
+        checkBstFromPreOrderArray(arr, low + 1, j - 1);
+        checkBstFromPreOrderArray(arr, j + 1, arr.length - 1);
+        return true;
+
+    }
+
+    public boolean checkBstFromPreOrderArray(int[] arr) {
+        Stack<Integer> stack = new Stack<>();
+        int root = Integer.MIN_VALUE;
+
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] < root)
+                return false;
+            while (!stack.isEmpty() && stack.peek() < arr[i]) {
+                root = stack.pop();
+            }
+            stack.push(arr[i]);
+
+        }
+        return true;
     }
 
 
