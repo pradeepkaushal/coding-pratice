@@ -66,4 +66,8 @@ public class RemoveDuplicateFromSortedLinkedList {
         }
         recursive(head);
     }
+
+    public static void removeDuplicateElements(Node head){
+
+    }
 }
