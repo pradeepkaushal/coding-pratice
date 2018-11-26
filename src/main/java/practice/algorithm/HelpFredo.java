@@ -55,7 +55,7 @@ public class HelpFredo {
             return 1;
         }
 //        int temp=input[i]*multiply(input,--i);
-        return temp;
+        return 0;
     }
 
 }

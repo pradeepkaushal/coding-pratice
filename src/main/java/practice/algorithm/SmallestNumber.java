@@ -1,55 +1,47 @@
 package practice.algorithm;
 
+/**
+ * https://www.hackerrank.com/tests/5b3rleldrpa/questions/ctmili3qrci
+ */
 public class SmallestNumber {
+    public static void main(String[] args) {
+        String number="1234577777771889189";
+        String smallestNumber = findSmallestNumber(number);
+        System.out.println(smallestNumber);
+    }
 
-    static String findSmalleselement(String number ){
-        char[] chars=number.toCharArray();
-        int[] rightMin = new int[chars.length];
+    public static String findSmallestNumber(String number){
+        char[] chars = number.toCharArray();
 
-        //Find start index of non zero element
-        int startIndex=0;
-        for(;startIndex<chars.length;startIndex++){
-            if(chars[startIndex]!='0'){
-                break;
+        //find trailing zero
+
+        int index=0;
+        for(;index<chars.length;index++){
+            if(chars[index]!='0'){
+            break;
             }
+
         }
-        //Fill the index if the trailing with zero
-        if(startIndex!=0){
-            for(int i=0;i<startIndex;i++){
-                rightMin[i]=-1;
+        for(;index<chars.length-1;index++){
+            char aChar=chars[index];
+            char min=chars[index];
+            int i=index+1;
+            int minIndex=-1;
+            for(;i<chars.length;i++){
+                if(min>=chars[i]){
+                    min=chars[i];
+                    minIndex=i;
+                }
             }
-        }
-
-        for(;startIndex<chars.length;startIndex++){
-            int smallestIndex = findSmallestIndex(chars, startIndex);
-            rightMin[startIndex]=smallestIndex;
-        }
-
-        for(int i=0;i<chars.length;i++){
-            if(rightMin[i]!=-1){
-                char temp = chars[i];
-                chars[i]=chars[rightMin[i]];
-                chars[rightMin[i]]=temp;
+            if(aChar==min)
+                continue;
+            if(minIndex>index){
+              chars[index]=chars[minIndex];
+              chars[minIndex]=aChar;
+              break;
             }
         }
         return new String(chars);
-
-    }
-
-    static int findSmallestIndex(char[] chars,int ind){
-
-        if(ind>=chars.length){
-            return -1;
-        }
-        char temp=chars[ind];
-        int index=-1;
-        for(int i=ind+1;i<chars.length;i++){
-            if(chars[i]>temp){
-                index=i;
-                temp=chars[i];
-            }
-        }
-        return index;
     }
 
 }
