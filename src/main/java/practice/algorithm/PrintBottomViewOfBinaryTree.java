@@ -3,9 +3,16 @@ package practice.algorithm;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class PrintBottomViewOfBinaryTree {
 
+    public static void main(String[] args) {
+
+        Node node = new Node(1);
+
+        bottomView(node);
+    }
 
     static class Node {
         int data; //data of the node
@@ -20,7 +27,7 @@ public class PrintBottomViewOfBinaryTree {
     }
 
     public static void bottomView(Node node) {
-        Map<Integer, Node> map = new LinkedHashMap<>();
+        Map<Integer, Node> map = new TreeMap<>();
         printBottomView(node,map,0);
         map.values().forEach(n-> System.out.print(n.data+" "));
     }
@@ -29,6 +36,7 @@ public class PrintBottomViewOfBinaryTree {
         if (node == null) {
             return;
         }
+
         map.put(hieght, node);
         printBottomView(node.left, map, hieght - 1);
         printBottomView(node.right, map, hieght + 1);
