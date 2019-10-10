@@ -116,4 +116,25 @@ public class BinaryTreeToBST {
         return max;
     }
 
+
+    boolean checkBST(Node root) {
+        int lastVisited = Integer.MIN_VALUE;
+        int[] arr = {lastVisited};
+        return inOrderTraversal(root, arr);
+    }
+
+    boolean inOrderTraversal(Node root, int[] arr) {
+        if (root == null) {
+            return true;
+        }
+
+        inOrderTraversal(root.left, arr);
+
+        if (arr[0] > root.data) {
+            return false;
+        }
+        arr[0] = root.data;
+        return inOrderTraversal(root, arr);
+    }
 }
+
