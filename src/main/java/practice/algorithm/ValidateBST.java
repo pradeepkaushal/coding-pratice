@@ -126,6 +126,8 @@ class Check_BST {
 }
 
 
+
+
 class GfG {
     int isBST(Node root) {
         if (root == null) {
