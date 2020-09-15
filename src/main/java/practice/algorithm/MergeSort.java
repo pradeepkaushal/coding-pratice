@@ -1,26 +1,46 @@
 package practice.algorithm;
 
+import java.util.Arrays;
+
 public class MergeSort {
 
-    public static void merge(int[] arr, int l,int m, int r){
-        int n1=m-l+1;
-        int n2=r-m;
+    public static void main(String[] args) {
+        int[] arr = {5, 1, 1, 2, 0, 0};
+        mergeSort(arr);
+    }
 
-        int[] lArr=new int[n1];
-        int[] rArr=new int[n2];
-
-        for(int i=0;i<n1;i++){
-            lArr[i]=arr[l+i];
+    public static int[] mergeSort(int[] arr) {
+        if (arr.length <= 1) {
+            return arr;
         }
 
-        for(int i=0;i<n1;i++){
-            rArr[i]=arr[m+1+i];
+        int pivot = arr.length / 2;
+
+
+        int leftArr[] = mergeSort(Arrays.copyOfRange(arr, 0, pivot));
+        int rightArr[] = mergeSort(Arrays.copyOfRange(arr, pivot, arr.length));
+
+        return merge(leftArr, rightArr);
+    }
+
+    private static int[] merge(int[] leftArr, int[] rightArr) {
+        int[] retArr = new int[leftArr.length + rightArr.length];
+        int leftCur = 0, rightCur = 0, retCur = 0;
+
+        while (leftCur < leftArr.length && rightCur < rightArr.length) {
+            if (leftArr[leftCur] < rightArr[rightCur]) {
+                retArr[retCur++] = leftArr[leftCur++];
+            } else {
+                retArr[retCur++] = rightArr[rightCur++];
+            }
+        }
+        while (leftCur < leftArr.length) {
+            retArr[retCur++] = leftArr[leftCur++];
         }
 
-        int i=0;
-        int j=0;
-        int k=l;
-        
-
+        while (rightCur < rightArr.length) {
+            retArr[retCur++] = rightArr[rightCur++];
+        }
+        return retArr;
     }
 }

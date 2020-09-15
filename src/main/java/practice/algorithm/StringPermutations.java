@@ -9,7 +9,8 @@ public class StringPermutations {
 
     public static void main(String[] args) {
         String input = "cats";
-        getPermutations(input);
+
+        recSubsets("", input);
     }
 
     public static Set<String> getPermutations(String inputString) {
@@ -36,5 +37,44 @@ public class StringPermutations {
         }
 
         return permutations;
+    }
+
+
+    public static void permute(String soFar, String rest) {
+        if (rest.isEmpty()) {
+            System.out.println(soFar);
+        } else {
+            for (int i = 0; i < rest.length(); i++) {
+                String remaining = rest.substring(0, i) + rest.substring(i + 1);
+                permute(soFar + rest.charAt(i), remaining);
+            }
+        }
+    }
+
+
+    public static void recSubsets(String soFar, String rest) {
+        if (rest.isEmpty()) {
+            System.out.println(soFar);
+        } else {
+
+            recSubsets(soFar + rest.charAt(0), rest.substring(1));
+            recSubsets(soFar, rest.substring(1));
+
+        }
+    }
+
+    public static String foundWord(String sofar, String rest, String word) {
+        if (rest.isEmpty()) {
+            return word.contains(sofar) ? sofar : "";
+        } else {
+            for (int i = 0; i < rest.length(); i++) {
+                String subStr = rest.substring(0, i) + rest.substring(i + 1);
+                String found = foundWord(sofar + rest.charAt(i), subStr, word);
+                if (!found.isEmpty()) {
+                    return found;
+                }
+            }
+        }
+        return "";
     }
 }

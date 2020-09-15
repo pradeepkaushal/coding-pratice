@@ -155,6 +155,7 @@ class GfG {
         if (node.left == null) {
             return node.data;
         }
+
         return minimumValue(node.left);
     }
 
@@ -164,5 +165,143 @@ class GfG {
         }
         return maxValue(node.right);
     }
+
+
+    int findMin(Node node) {
+        int[] value = new int[0];
+        value[0] = Integer.MAX_VALUE;
+        findMin(node, value);
+        return value[0];
+    }
+
+    void findMin(Node node, int[] val) {
+        if (node == null) {
+            return;
+        }
+        findMin(node.left);
+        if (val[0] > node.data) {
+            val[0] = node.data;
+        }
+        findMin(node.right);
+    }
+
+    int findMax(Node node) {
+        int[] value = new int[0];
+        value[0] = Integer.MIN_VALUE;
+        findMax(node, value);
+        return value[0];
+    }
+
+    void findMax(Node node, int[] val) {
+        if (node == null) {
+            return;
+        }
+        findMax(node.left, val);
+        if (val[0] < node.data) {
+            val[0] = node.data;
+        }
+        findMax(node.right);
+    }
 }
 
+
+class Bst {
+
+    public static void main(String[] args) {
+        TreeNode node = new TreeNode(10);
+        node.left = new TreeNode(5);
+        node.right = new TreeNode(15);
+        node.right.left = new TreeNode(6);
+        node.right.right = new TreeNode(20);
+        System.out.println(new Bst().helper(node, null, null));
+    }
+
+    public static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        @Override
+        public String toString() {
+            return "TreeNode{" +
+                    "val=" + val +
+                    ", left=" + left +
+                    ", right=" + right +
+                    '}';
+        }
+    }
+
+    boolean isBST(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+
+        if ((root.left != null && root.left.val >= root.val) || root.val < findMax(root)) {
+            return false;
+        }
+
+        if ((root.right != null && root.right.val <= root.val) || root.val > findMin(root)) {
+            return false;
+        }
+        return isBST(root.left) && isBST(root.right);
+    }
+
+
+    int findMin(TreeNode node) {
+        int[] value = new int[1];
+        value[0] = Integer.MAX_VALUE;
+        findMin(node, value);
+        return value[0];
+    }
+
+    void findMin(TreeNode node, int[] value) {
+        if (node == null) {
+            return;
+        }
+        findMin(node.left, value);
+        if (value[0] > node.val) {
+            value[0] = node.val;
+        }
+        findMin(node.right, value);
+    }
+
+    int findMax(TreeNode node) {
+        int[] value = new int[1];
+        value[0] = Integer.MIN_VALUE;
+        findMax(node, value);
+        return value[0];
+    }
+
+    void findMax(TreeNode node, int[] value) {
+        if (node == null) {
+            return;
+        }
+        findMax(node.left, value);
+        if (value[0] < node.val) {
+            value[0] = node.val;
+        }
+        findMax(node.right, value);
+    }
+
+
+    public boolean helper(TreeNode node, Integer lower, Integer upper) {
+        if (node == null) return true;
+
+        int val = node.val;
+        if (lower != null && val <= lower) return false;
+        if (upper != null && val >= upper) return false;
+
+        if (!helper(node.right, val, upper)) return false;
+        if (!helper(node.left, lower, val)) return false;
+        return true;
+    }
+
+    public boolean isValidBST(TreeNode root) {
+        return helper(root, null, null);
+    }
+}
