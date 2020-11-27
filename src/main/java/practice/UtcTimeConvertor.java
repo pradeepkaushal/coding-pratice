@@ -10,7 +10,7 @@ public class UtcTimeConvertor {
     String ISO_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSX";
     DateFormat dateFormat = new SimpleDateFormat(ISO_FORMAT);
 
-    int beginDate = 11;
+    int beginDate = 1;
     int endDate = 30;
 
     for (int i = beginDate; i <= endDate; i++) {
@@ -22,9 +22,9 @@ public class UtcTimeConvertor {
         s += i;
       }
 
-      String startDateStr = String.format("2020-10-%sT00:00:00.000Z", s);
+      String startDateStr = String.format("2020-11-%sT00:00:00.000Z", s);
 
-      String endDateStr = String.format("2020-10-%sT23:59:00.000Z", s);
+      String endDateStr = String.format("2020-11-%sT23:59:00.000Z", s);
 
       long startTime = dateFormat.parse(startDateStr).getTime();
 
